@@ -1,5 +1,4 @@
-const
-  user = require('../user')
+
 
 var functions = {
   getUserMentionsFromComment: function(commentBody) {
@@ -20,7 +19,7 @@ var functions = {
   stripJiraMarkupFromUsername: function(username) {
     return username.split('[~')[1].split(']')[0]
   },
-  swapJiraAccountIdWithJiraName: function(commentBody, userMentions) {
+  swapJiraAccountIdWithJiraName: function(commentBody, userMentions, user) {
     console.log("swapping")
     userMentions.forEach(userMention => {
       console.log("mentuon 1")

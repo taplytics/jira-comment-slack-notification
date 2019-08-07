@@ -20,6 +20,7 @@ var functions = {
     return username.split('[~')[1].split(']')[0]
   },
   swapJiraAccountIdWithJiraName: function(commentBody, userMentions, user) {
+    return new Promise(function(resolve, reject) {
     userMentions.forEach(userMention => {
       user.getByJiraUsername(userMention).then((thisUser, index) => {
         commentBody = commentBody.replace(userMention, thisUser.jiraShortName)
@@ -27,8 +28,8 @@ var functions = {
       })
     })
     return resolve(commentBody); 
-  }
-}
+  })
+}}
 
 
 

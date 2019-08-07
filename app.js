@@ -311,7 +311,7 @@ app.post('/comment-created', function(req, res) {
         // find if there is a user with that jira username in this app's DB
 
         console.log("Getting username for: "+userMention)
-        
+        commentBody = "test";
         user.getByJiraUsername(userMention).then((thisUser, index) => {
           // check if this webhook contains a jira issue in payload
           // https://github.com/msolomonTMG/jira-comment-slack-notification/issues/17

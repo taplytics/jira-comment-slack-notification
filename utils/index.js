@@ -1,6 +1,5 @@
 var functions = {
   getUserMentionsFromComment: function(commentBody) {
-
     return new Promise(function(resolve, reject) {
       console.log("Getting names from comment body")
       let userMentions = commentBody.match(/(\[~[a-zA-Z0-9\.:]+\])/g)
@@ -17,7 +16,16 @@ var functions = {
   },
   stripJiraMarkupFromUsername: function(username) {
     return username.split('[~')[1].split(']')[0]
+  },
+  swapJiraAccountIdWithJiraName: function(commentBody) {
+    let regex = '/(\[~[a-zA-Z0-9\.:]+\])/g'
+
+  },
+  getUsernameFromId: function(userName) {
+    return 
   }
 }
+
+
 
 module.exports = functions;

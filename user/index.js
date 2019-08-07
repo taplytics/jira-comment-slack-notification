@@ -6,7 +6,9 @@ var userSchema = new mongoose.Schema({
   slackUsername: String,
   jiraUsername: String,
   jiraToken: String,
-  jiraTokenSecret: String
+  jiraTokenSecret: String,
+  jiraID: String
+
 });
 
 var User = mongoose.model('Users', userSchema);
@@ -57,7 +59,20 @@ var functions = {
   },
   getByJiraUsername: function(jiraUsername) {
     return new Promise(function(resolve, reject) {
+      User.findOne({
+        jiraUsername: jiraUsername
+      }, function(err, user) {
+        if(!err) {
+          return resolve(user)
+        } else {
+          return reject(err)
+        }
+      })
 
+    });
+  },
+  getByJiraId: function(jiraId) {
+    return new Promise(function(resolve, reject) {
       User.findOne({
         jiraUsername: jiraUsername
       }, function(err, user) {

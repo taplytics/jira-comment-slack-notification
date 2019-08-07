@@ -89,11 +89,14 @@ bot.on('message', function(message) {
       case 'signup':
         helpers.getUsernameFromId(message.user).then(username => {
           user.getBySlackUsername(username).then(user => {
+
+            console.log(user)
             if (user) {
               bot.postMessageToUser(username, `You're already signed up!`).then(function() {
                 functions.sendSettingsToUser(user)
               })
             } else {
+              console.log('no user')
               bot.postMessageToUser(username, `Signup by <${APP_URL}user/create?slackUsername=${username}|clicking here>`)
             }
 
@@ -101,6 +104,7 @@ bot.on('message', function(message) {
         })
       break;
       default:
+        console.log('default is happening')
         helpers.getUsernameFromId(message.user).then(username => {
           let response = ':wave: I can only do a few things right now. Say `settings` to adjust your settings or say `signup` to signup!. I plan on getting smarter eventually!'
           bot.postMessageToUser(username, response).fail(function(data) {

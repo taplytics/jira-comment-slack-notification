@@ -306,13 +306,8 @@ app.post('/comment-created', function(req, res) {
   if (webhookReason === "comment_created" && webhookData.comment.author.displayName != "GitHub Integration") {
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
-
       try {
-        req.body.comment.body = "a"
-        webhookData.comment.body = "b"
-        commentBody = "c"
-
-        //utils.swapJiraAccountIdWithJiraName(commentBody, userMentions, user);
+        webhookData.comment.body = utils.swapJiraAccountIdWithJiraName(commentBody, userMentions, user);
       } 
       catch(error) {
         console.error(error);

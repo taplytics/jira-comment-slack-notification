@@ -307,12 +307,14 @@ app.post('/comment-created', function(req, res) {
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
       // for each mentioned user thats signed up for this app, send slack msg
+      webhookData.req.body = utils.swapJiraAccountIdWithJiraName(commentBody, userMentions, user);
+      
       userMentions.forEach(userMention => {
         // find if there is a user with that jira username in this app's DB
 
         console.log("Getting username for: "+userMention)
-        webhookData.req.body = "test 2";
         user.getByJiraUsername(userMention).then((thisUser, index) => {
+
           // check if this webhook contains a jira issue in payload
           // https://github.com/msolomonTMG/jira-comment-slack-notification/issues/17
           // TODO: we can clean this up with async/await

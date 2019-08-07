@@ -7,8 +7,7 @@ var userSchema = new mongoose.Schema({
   jiraUsername: String,
   jiraToken: String,
   jiraTokenSecret: String,
-  jiraID: String
-
+  jiraShortName: String
 });
 
 var User = mongoose.model('Users', userSchema);
@@ -58,20 +57,6 @@ var functions = {
     })
   },
   getByJiraUsername: function(jiraUsername) {
-    return new Promise(function(resolve, reject) {
-      User.findOne({
-        jiraUsername: jiraUsername
-      }, function(err, user) {
-        if(!err) {
-          return resolve(user)
-        } else {
-          return reject(err)
-        }
-      })
-
-    });
-  },
-  getByJiraId: function(jiraId) {
     return new Promise(function(resolve, reject) {
       User.findOne({
         jiraUsername: jiraUsername

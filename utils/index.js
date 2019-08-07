@@ -17,12 +17,13 @@ var functions = {
   stripJiraMarkupFromUsername: function(username) {
     return username.split('[~')[1].split(']')[0]
   },
-  swapJiraAccountIdWithJiraName: function(commentBody) {
-    let regex = '/(\[~[a-zA-Z0-9\.:]+\])/g'
-    return 0
-  },
-  getUsernameFromId: function(userName) {
-    return 0
+  swapJiraAccountIdWithJiraName: function(commentBody, userMentions, user) {
+    userMentions.forEach(userMention => {
+      user.getByJiraUsername(userMention).then((thisUser, index) => {
+        commentBody.replace(userMention, thisUser.jiraShortName)
+      })
+    })
+    return commentBody; 
   }
 }
 

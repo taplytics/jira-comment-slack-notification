@@ -307,10 +307,13 @@ app.post('/comment-created', function(req, res) {
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
 
+      try {
 
       webhookData.body.comment.body = utils.swapJiraAccountIdWithJiraName(commentBody, userMentions);
-
-
+      } 
+      catch(error) {
+        console.error(error);
+      }
 // for each mentioned user thats signed up for this app, send slack msg      
       userMentions.forEach(userMention => {
         // find if there is a user with that jira username in this app's DB

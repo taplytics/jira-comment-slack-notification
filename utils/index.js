@@ -23,6 +23,7 @@ var functions = {
     userMentions.forEach(userMention => {
       user.getByJiraUsername(userMention).then((thisUser, index) => {
         commentBody = commentBody.replace(userMention, thisUser.jiraShortName)
+        console.log(commentBody) 
       })
     })
     return commentBody; 

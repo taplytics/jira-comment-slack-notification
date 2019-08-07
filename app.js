@@ -60,7 +60,7 @@ passport.use(new AtlassianOAuthStrategy({
   consumerKey:"neptune-the-dodle",
   consumerSecret:privateKey
 }, function(req, token, tokenSecret, profile, done) {
-    console.log('HELLO')
+    console.log('HELLO YES')
     process.nextTick(function() {
       console.log(token)
       console.log(tokenSecret)
@@ -176,6 +176,8 @@ app.get('/settings', function(req, res) {
 })
 
 app.post('/response-from-slack', function(req, res) {
+  console.log ('response-from-slack');
+
   console.log(req.body)
   if (req.body.challenge) {
     res.send(req.body.challenge)
@@ -215,6 +217,8 @@ app.post('/response-from-slack', function(req, res) {
 
       })
     } else if (payload.callback_id.match(/create_comment/)) {
+      console.log ('response-from-slack else');
+
       user.getBySlackUsername(payload.user.name).then(thisUser => {
         console.log(thisUser)
         console.log(payload)
@@ -290,6 +294,10 @@ app.post('/msg-wake-up', function(req, res) {
 })
 
 app.post('/comment-created', function(req, res) {
+
+  console.log ('Cement Created! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !');
+
+
   let webhookReason = req.body.webhookEvent,
       webhookData = req.body,
       commentBody = req.body.comment.body;
@@ -297,6 +305,8 @@ app.post('/comment-created', function(req, res) {
   // continue if the webhook was sent to us because an issue was commented on
   // by someone other than our GitHub Integration
   if (webhookReason === "comment_created" && webhookData.comment.author.displayName != "GitHub Integration") {
+    console.log ('this aint github');
+
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
       // for each mentioned user thats signed up for this app, send slack msg

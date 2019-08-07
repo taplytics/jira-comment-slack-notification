@@ -1,5 +1,5 @@
 const
-  user = require('./user'),
+  user = require('./user')
 
 var functions = {
   getUserMentionsFromComment: function(commentBody) {

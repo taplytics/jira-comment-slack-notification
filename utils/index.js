@@ -26,7 +26,7 @@ var functions = {
         console.log(commentBody) 
       })
     })
-    return commentBody; 
+    return resolve(commentBody); 
   }
 }
 

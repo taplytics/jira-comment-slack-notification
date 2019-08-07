@@ -5,6 +5,7 @@ var functions = {
     return new Promise(function(resolve, reject) {
       let userMentions = commentBody.match(/(\[~[a-zA-Z0-9\.]+\])/g)
       if (userMentions.length > 0) {
+        console.log ('GOT '+userMentions.length+' names');
         return resolve(userMentions)
       } else {
         return reject(false)

@@ -312,15 +312,21 @@ app.post('/comment-created', function(req, res) {
       // for each mentioned user thats signed up for this app, send slack msg
       userMentions.forEach(userMention => {
         // find if there is a user with that jira username in this app's DB
+
+        console.log("Getting username for: "+userMention)
+        
         user.getByJiraUsername(userMention).then((thisUser, index) => {
           // check if this webhook contains a jira issue in payload
           // https://github.com/msolomonTMG/jira-comment-slack-notification/issues/17
           // TODO: we can clean this up with async/await
           if (!webhookData.issue) {
+            console.log("Not issue")
             const issueUrl = webhookData.comment.self.split('/comment')[0]
             jira.getTicketInfo(thisUser, issueUrl).then(issueData => {
               webhookData.issue = issueData
               // send a slack message to the user
+
+              console.log("Sending comment")
               slack.sendCommentToUser(thisUser, webhookData).then(result => {
                 // if this is the last user to msg, send 200 status
                 if (userMentions.length === index + 1) {
@@ -330,7 +336,9 @@ app.post('/comment-created', function(req, res) {
               .catch(err => { return res.sendStatus(500) })
             })
           } else {
+            console.log("issue")
             // send a slack message to the user
+            console.log("Sending comment")
             slack.sendCommentToUser(thisUser, webhookData).then(result => {
               // if this is the last user to msg, send 200 status
               if (userMentions.length === index + 1) {

@@ -19,10 +19,10 @@ var functions = {
   },
   swapJiraAccountIdWithJiraName: function(commentBody) {
     let regex = '/(\[~[a-zA-Z0-9\.:]+\])/g'
-
+    return 0
   },
   getUsernameFromId: function(userName) {
-    return 
+    return 0
   }
 }
 

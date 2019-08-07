@@ -5,11 +5,17 @@ var functions = {
     return new Promise(function(resolve, reject) {
       console.log('getUserMentionsFromComment in promise')
       
+      try{ 
       let userMentions = commentBody.match(/(\[~[a-zA-Z0-9\.]+\])/g)
+      } catch {
+        console.log('getUserMentionsFromComment fail')
+      }
+      console.log(userMentions)
       if (userMentions.length > 0) {
-        console.log ('GOT '+userMentions.length+' names');
+        console.log ('GOT '+ userMentions.length + ' names');
         return resolve(userMentions)
       } else {
+        console.log('No matches found')
         return reject(false)
       }
     });

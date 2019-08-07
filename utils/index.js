@@ -20,11 +20,8 @@ var functions = {
     return username.split('[~')[1].split(']')[0]
   },
   swapJiraAccountIdWithJiraName: function(commentBody, userMentions, user) {
-    console.log("swapping")
     userMentions.forEach(userMention => {
-      console.log("mentuon 1")
       user.getByJiraUsername(userMention).then((thisUser, index) => {
-        console.log("hello" + userMention.jiraShortName);
         commentBody.replace(userMention, thisUser.jiraShortName)
       })
     })

@@ -2,13 +2,12 @@ var functions = {
   getUserMentionsFromComment: function(commentBody) {
 
     return new Promise(function(resolve, reject) {
-      console.log(commentBody)
+      console.log("Getting names from comment body")
       let userMentions = commentBody.match(/(\[~[a-zA-Z0-9\.:]+\])/g)
+      console.log ('Got '+userMentions.length);
       if (userMentions.length > 0) {
-        console.log ('GOT '+ userMentions.length + ' names');
         return resolve(userMentions)
       } else {
-        console.log('No matches found')
         return reject(false)
       }
     });

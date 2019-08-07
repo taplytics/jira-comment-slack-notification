@@ -295,8 +295,7 @@ app.post('/msg-wake-up', function(req, res) {
 
 app.post('/comment-created', function(req, res) {
 
-  console.log ('Cement Created! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !');
-
+  console.log("Comment Created.")
 
   let webhookReason = req.body.webhookEvent,
       webhookData = req.body,
@@ -305,8 +304,6 @@ app.post('/comment-created', function(req, res) {
   // continue if the webhook was sent to us because an issue was commented on
   // by someone other than our GitHub Integration
   if (webhookReason === "comment_created" && webhookData.comment.author.displayName != "GitHub Integration") {
-    console.log ('this aint github');
-
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
       // for each mentioned user thats signed up for this app, send slack msg
@@ -320,13 +317,10 @@ app.post('/comment-created', function(req, res) {
           // https://github.com/msolomonTMG/jira-comment-slack-notification/issues/17
           // TODO: we can clean this up with async/await
           if (!webhookData.issue) {
-            console.log("Not issue")
             const issueUrl = webhookData.comment.self.split('/comment')[0]
             jira.getTicketInfo(thisUser, issueUrl).then(issueData => {
               webhookData.issue = issueData
               // send a slack message to the user
-
-              console.log("Sending comment")
               slack.sendCommentToUser(thisUser, webhookData).then(result => {
                 // if this is the last user to msg, send 200 status
                 if (userMentions.length === index + 1) {
@@ -336,9 +330,7 @@ app.post('/comment-created', function(req, res) {
               .catch(err => { return res.sendStatus(500) })
             })
           } else {
-            console.log("issue")
             // send a slack message to the user
-            console.log("Sending comment")
             slack.sendCommentToUser(thisUser, webhookData).then(result => {
               // if this is the last user to msg, send 200 status
               if (userMentions.length === index + 1) {

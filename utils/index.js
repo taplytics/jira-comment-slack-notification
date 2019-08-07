@@ -24,6 +24,7 @@ var functions = {
       user.getByJiraUsername(userMention).then((thisUser, index) => {
         console.log("jira short name: " + thisUser.jiraShortName)
         commentBody = commentBody.replace(userMention, thisUser.jiraShortName)
+        console.log("New comment body: "+commentBody);
       })
     })
     return commentBody; 

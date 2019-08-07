@@ -4,12 +4,8 @@ var functions = {
 
     return new Promise(function(resolve, reject) {
       console.log('getUserMentionsFromComment in promise')
-      
-      try{ 
+      console.log(commentBody)
       let userMentions = commentBody.match(/(\[~[a-zA-Z0-9\.]+\])/g)
-      } catch {
-        console.log('getUserMentionsFromComment fail')
-      }
       console.log(userMentions)
       if (userMentions.length > 0) {
         console.log ('GOT '+ userMentions.length + ' names');

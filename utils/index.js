@@ -22,7 +22,9 @@ var functions = {
   swapJiraAccountIdWithJiraName: function(commentBody, userMentions, user) {
     userMentions.forEach(userMention => {
       user.getByJiraUsername(userMention).then((thisUser, index) => {
-        commentBody.replace(userMention, thisUser.jiraShortName)
+        console.log ("mention: "+userMention)
+        console.log ("shortName: "+jiraShortName);
+        commentBody = commentBody.replace(userMention, thisUser.jiraShortName)
       })
     })
     return commentBody; 

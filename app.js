@@ -308,7 +308,7 @@ app.post('/comment-created', function(req, res) {
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
 
       try {
-        req.body.comment.body = utils.swapJiraAccountIdWithJiraName(commentBody, userMentions, user);
+        webhookData.comment.body = utils.swapJiraAccountIdWithJiraName(commentBody, userMentions, user);
       } 
       catch(error) {
         console.error(error);
@@ -316,8 +316,6 @@ app.post('/comment-created', function(req, res) {
 // for each mentioned user thats signed up for this app, send slack msg      
       userMentions.forEach(userMention => {
         // find if there is a user with that jira username in this app's DB
-
-        console.log("Getting username for: "+userMention)
         user.getByJiraUsername(userMention).then((thisUser, index) => {
 
           // check if this webhook contains a jira issue in payload

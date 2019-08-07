@@ -308,7 +308,7 @@ app.post('/comment-created', function(req, res) {
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
 
       try {
-        webhookData.comment.body = utils.swapJiraAccountIdWithJiraName(commentBody, userMentions, user);
+        req.body.comment.body = utils.swapJiraAccountIdWithJiraName(commentBody, userMentions, user);
       } 
       catch(error) {
         console.error(error);

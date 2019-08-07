@@ -307,7 +307,9 @@ app.post('/comment-created', function(req, res) {
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
       try {
-        webhookData.comment.body = utils.swapJiraAccountIdWithJiraName(webhookData.comment.body, userMentions, user);
+        let temp = utils.swapJiraAccountIdWithJiraName(webhookData.comment.body, userMentions, user);
+        console.log("temp: " + temp)
+        webhookData.comment.body = temp
       } 
       catch(error) {
         console.error(error);

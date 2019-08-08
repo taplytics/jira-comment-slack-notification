@@ -303,6 +303,7 @@ app.post('/comment-created', function(req, res) {
   // continue if the webhook was sent to us because an issue was commented on
   // by someone other than our GitHub Integration
   if (webhookReason === "comment_created" && webhookData.comment.author.displayName != "GitHub Integration") {
+    console.log("INCOMING /COMMENT_CREATED: "+ req);
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
         utils.swapJiraAccountIdWithJiraName(webhookData.comment.body, userMentions, user).then(newBody => {
@@ -323,30 +324,47 @@ app.post('/comment-created', function(req, res) {
               // send a slack message to the user
               slack.sendCommentToUser(thisUser, webhookData).then(result => {
                 // if this is the last user to msg, send 200 status
+
+                console.log("almost returning, mention length: " + userMentions.length + " INDEX+1: " + index + 1)
                 if (userMentions.length === index + 1) {
                   res.sendStatus(200)
                 }
               })
-              .catch(err => { return res.sendStatus(500) })
+              .catch(err => {
+                console.log("Error 500 extra logs 1");
+                 return res.sendStatus(500) })
             })
           } else {
             // send a slack message to the user
             slack.sendCommentToUser(thisUser, webhookData).then(result => {
               // if this is the last user to msg, send 200 status
+              
+
+              console.log("almost returning IN ELSE, mention length: " + userMentions.length + " INDEX+1: " + index + 1)
+
               if (userMentions.length === index + 1) {
                 res.sendStatus(200)
               }
             })
-            .catch(err => { return res.sendStatus(500) })
+            .catch(err => {
+              console.log("Error 500 extra logs 2");
+
+               return res.sendStatus(500) })
           }
 
         })
-        .catch(noUser => { return res.sendStatus(200) })
+        .catch(noUser => { 
+          console.log("Error 500 extra logs 3");
+
+          return res.sendStatus(200) })
 
       })
 
     })})
-    .catch(noMentions => { return res.sendStatus(200) })
+    .catch(noMentions => { 
+      console.log("Error 500 extra logs 4");
+
+      return res.sendStatus(200) })
   }
 
 })

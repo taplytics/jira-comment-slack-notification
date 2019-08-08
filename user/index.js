@@ -60,14 +60,10 @@ var functions = {
       User.findOne({
         jiraUsername: jiraUsername
       }, function(err, user) {
-        console.log("USER HERE --------")
-        console.log(user);
         if(user == null){
           User.findOne({
             jiraShortName: jiraUsername
           }, function(err, user) {
-            console.log("USER HERE --------")
-            console.log(user);
             if(!err) {
               return resolve(user)
             } else {

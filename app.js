@@ -309,10 +309,12 @@ app.post('/comment-created', function(req, res) {
         utils.swapJiraAccountIdWithJiraName(webhookData.comment.body, userMentions, user).then(newBody => {
         webhookData.comment.body = newBody
     
+        //MANUAL LOCK BECAUSE INDEX IS UNDEFINED:
+        let index = 0
 // for each mentioned user thats signed up for this app, send slack msg      
       userMentions.forEach(userMention => {
         // find if there is a user with that jira username in this app's DB
-        user.getByJiraUsername(userMention).then((thisUser, index) => {
+        user.getByJiraUsername(userMention).then((thisUser) => {
 
           // check if this webhook contains a jira issue in payload
           // https://github.com/msolomonTMG/jira-comment-slack-notification/issues/17
@@ -329,6 +331,8 @@ app.post('/comment-created', function(req, res) {
                 if (userMentions.length === index + 1) {
                   console.log("returned 1")
                   res.sendStatus(200)
+                } else {
+                  index = index + 1
                 }
               })
               .catch(err => {
@@ -345,6 +349,8 @@ app.post('/comment-created', function(req, res) {
               if (userMentions.length === index + 1) {
                 console.log("returned 2")
                 res.sendStatus(200)
+              } else {
+                index = index + 1
               }
             })
             .catch(err => {

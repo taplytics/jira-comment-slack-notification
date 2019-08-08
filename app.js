@@ -60,7 +60,6 @@ passport.use(new AtlassianOAuthStrategy({
   consumerKey:"neptune-the-dodle",
   consumerSecret:privateKey
 }, function(req, token, tokenSecret, profile, done) {
-    console.log('HELLO YES')
     process.nextTick(function() {
       console.log(token)
       console.log(tokenSecret)
@@ -295,8 +294,7 @@ app.post('/msg-wake-up', function(req, res) {
 
 app.post('/comment-created', function(req, res) {
 
-  console.log ('Cement Created! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !');
-
+  console.log("Comment Created.")
 
   let webhookReason = req.body.webhookEvent,
       webhookData = req.body,
@@ -305,14 +303,18 @@ app.post('/comment-created', function(req, res) {
   // continue if the webhook was sent to us because an issue was commented on
   // by someone other than our GitHub Integration
   if (webhookReason === "comment_created" && webhookData.comment.author.displayName != "GitHub Integration") {
-    console.log ('this aint github');
-
     // look for a user mention in the comment
     utils.getUserMentionsFromComment(commentBody).then(userMentions => {
-      // for each mentioned user thats signed up for this app, send slack msg
+        utils.swapJiraAccountIdWithJiraName(webhookData.comment.body, userMentions, user).then(newBody => {
+        webhookData.comment.body = newBody
+    
+        //MANUAL LOCK BECAUSE INDEX IS UNDEFINED:
+        let index = 0
+// for each mentioned user thats signed up for this app, send slack msg      
       userMentions.forEach(userMention => {
         // find if there is a user with that jira username in this app's DB
-        user.getByJiraUsername(userMention).then((thisUser, index) => {
+        user.getByJiraUsername(userMention).then((thisUser) => {
+
           // check if this webhook contains a jira issue in payload
           // https://github.com/msolomonTMG/jira-comment-slack-notification/issues/17
           // TODO: we can clean this up with async/await
@@ -323,30 +325,40 @@ app.post('/comment-created', function(req, res) {
               // send a slack message to the user
               slack.sendCommentToUser(thisUser, webhookData).then(result => {
                 // if this is the last user to msg, send 200 status
+
                 if (userMentions.length === index + 1) {
                   res.sendStatus(200)
+                } else {
+                  index = index + 1
                 }
               })
-              .catch(err => { return res.sendStatus(500) })
+              .catch(err => {
+                 return res.sendStatus(500) })
             })
           } else {
             // send a slack message to the user
             slack.sendCommentToUser(thisUser, webhookData).then(result => {
               // if this is the last user to msg, send 200 status
+          
               if (userMentions.length === index + 1) {
                 res.sendStatus(200)
+              } else {
+                index = index + 1
               }
             })
-            .catch(err => { return res.sendStatus(500) })
+            .catch(err => {
+              return res.sendStatus(500) })
           }
 
         })
-        .catch(noUser => { return res.sendStatus(200) })
+        .catch(noUser => { 
+          return res.sendStatus(200) })
 
       })
 
-    })
-    .catch(noMentions => { return res.sendStatus(200) })
+    })})
+    .catch(noMentions => { 
+      return res.sendStatus(200) })
   }
 
 })

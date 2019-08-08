@@ -21,13 +21,17 @@ var functions = {
   },
   swapJiraAccountIdWithJiraName: function(commentBody, userMentions, user) {
     return new Promise(function(resolve, reject) {
+    let lock = userMention.length;
+    let count = 0
     userMentions.forEach(userMention => {
       user.getByJiraUsername(userMention).then((thisUser, index) => {
         commentBody = commentBody.replace(userMention, thisUser.jiraShortName)
-        console.log(commentBody) 
+        count++
+        if (count == userMention.length) {
+          resolve(commentBody);
+        }
       })
     })
-    return resolve(commentBody); 
   })
 }}
 

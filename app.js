@@ -60,7 +60,6 @@ passport.use(new AtlassianOAuthStrategy({
   consumerKey:"neptune-the-dodle",
   consumerSecret:privateKey
 }, function(req, token, tokenSecret, profile, done) {
-    console.log('HELLO YES')
     process.nextTick(function() {
       console.log(token)
       console.log(tokenSecret)

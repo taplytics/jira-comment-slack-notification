@@ -39,7 +39,6 @@ var functions = {
   },
   create: function(userObj) {
     return new Promise(function (resolve, reject) {
-
       newUser = new User ({
         slackUsername: userObj.slackUsername
         // jiraUsername: utils.addJiraMarkupToUsername(userObj.jiraUsername),
@@ -61,15 +60,30 @@ var functions = {
       User.findOne({
         jiraUsername: jiraUsername
       }, function(err, user) {
+        console.log("USER HERE --------")
+        console.log(user);
+        if(user == null){
+          User.findOne({
+            jiraShortName: jiraUsername
+          }, function(err, user) {
+            console.log("USER HERE --------")
+            console.log(user);
+            if(!err) {
+              return resolve(user)
+            } else {
+              return reject(err)
+            }
+          })
+        }
         if(!err) {
           return resolve(user)
         } else {
           return reject(err)
         }
       })
-
     });
   },
+
   getBySlackUsername: function(slackUsername) {
     return new Promise(function(resolve, reject) {
       console.log("GETTING USER")

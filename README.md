@@ -1,4 +1,6 @@
-# Get a DM in Slack when mentioned in a Jira Comment!
+# Get a DM in Slack when mentioned in a Jira Comment (Taplytics Edition)
+
+Please view this PR to understand the difference from the parent: https://github.com/taplytics/jira-comment-slack-notification/pull/3
 
 ## What is this App?
 Read about how Group Nine created an application that sends us direct messages in Slack when we get mentioned in Jira comments: https://medium.com/group-nine-media-product-team/slack-notifications-for-jira-comments-1d57879bc149

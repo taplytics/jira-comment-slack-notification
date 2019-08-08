@@ -327,6 +327,7 @@ app.post('/comment-created', function(req, res) {
 
                 console.log("almost returning, mention length: " + userMentions.length + " INDEX+1: " + index + 1)
                 if (userMentions.length === index + 1) {
+                  console.log("returned 1")
                   res.sendStatus(200)
                 }
               })
@@ -338,11 +339,11 @@ app.post('/comment-created', function(req, res) {
             // send a slack message to the user
             slack.sendCommentToUser(thisUser, webhookData).then(result => {
               // if this is the last user to msg, send 200 status
-              
-
-              console.log("almost returning IN ELSE, mention length: " + userMentions.length + " INDEX+1: " + index + 1)
+            
+              console.log("almost returning IN ELSE, mention length: " + userMentions.length + " INDEX: " + index)
 
               if (userMentions.length === index + 1) {
+                console.log("returned 2")
                 res.sendStatus(200)
               }
             })

@@ -74,12 +74,13 @@ var functions = {
               return reject(err)
             }
           })
-        }
+        } else {
         if(!err) {
           return resolve(user)
         } else {
           return reject(err)
         }
+      }
       })
     });
   },

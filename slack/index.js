@@ -135,6 +135,8 @@ var functions = {
     return new Promise(function(resolve, reject) {
       let issueKey = payload.actions[0].value.split('|')[0]
       let commentCreator = payload.actions[0].value.split('|')[1]
+
+      console.log("PAYLOAD: ")
       
       let dialog = {
         callback_id: `create_comment|${issueKey}`,
@@ -237,6 +239,8 @@ var functions = {
           }]
         })
       } else {
+        console.log("TESTING LOGS ON PUSH TO SLACK: ")
+        console.log(comment)
         attachments.push({
           fallback: "Respond without leaving Slack",
           callback_id: "pop_comment_dialog",

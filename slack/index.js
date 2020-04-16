@@ -250,7 +250,7 @@ var functions = {
             style: "primary",
             text: "Respond from Slack",
             type: "button",
-            value: `${issue.key}|${comment.author.key}`
+            value: `${issue.key}|${comment.author.accountId}`
           }]
         })
       }

@@ -83,15 +83,15 @@ var functions = {
 
   getBySlackUsername: function(slackUsername) {
     return new Promise(function(resolve, reject) {
-      console.log("GETTING USER")
+      console.log("GETTING USER BY SLACK USERNAME")
       User.findOne({
         slackUsername: slackUsername
       }, function(err, user) {
-        console.log("ERROR" + err)
-        console.log("USER" + user)
         if(!err) {
+          console.log("USER" + user)
           return resolve(user)
         } else {
+          console.log("ERROR" + err)
           return reject(err)
         }
       })
@@ -100,13 +100,17 @@ var functions = {
   },
   getBySlackUserId: function(slackUserId) {
     return new Promise(function(resolve, reject) {
-
+      console.log("GETTING USER BY SLACK USER ID")
       User.findOne({
         slackUserId: slackUserId
       }, function(err, user) {
+        console.log("ERROR" + err)
+        console.log("ON USER" + user)
         if(!err) {
+          console.log("ERROR" + err)
           return resolve(user)
         } else {
+          console.log("USER" + user)
           return reject(err)
         }
       })

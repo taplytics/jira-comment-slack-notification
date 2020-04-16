@@ -183,7 +183,7 @@ app.post('/response-from-slack', function(req, res) {
   } else if (req.body.payload) {
 
     let payload = JSON.parse(req.body.payload)
-    console.log("PAYLOAD")
+    console.log("PAYLOAD: ")
     console.log(payload)
 
     if (payload.callback_id == 'pop_comment_dialog') {
